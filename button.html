@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	a{
+		display:block;
+		margin:100px auto;
+		background:rgb(72,23,85);
+		color:#fff;
+		width:120px;
+		height:30px;
+		text-align:center;
+		height:30px;
+		text-decoration:none;
+		border-radius:3px;
+	}
+	a:hover{
+		opacity:.7;
+		box-shadow:0 0 1px 3px gray; 
+	}
+	body{
+		background:#ddd;
+	}
+	div{
+		width:8px;
+		height:28px;
+		background:linear-gradient(to right,#ccc 0%,white 50%,#ccc 100%);
+		box-shadow:0 0 1px 3px #eee;
+		transform:skewX(-20deg);
+		position:relative;
+		top:-130px;
+		left:880px;
+		display:none;
+		/*animation:mine 1s linear;
+		display:none;
+		animation-fill-mode: forwards;*/
+	}
+	@keyframes mine{
+		from{
+			left:880px;
+		}
+		to{
+			left:1000px;
+
+		}
+	}
+  </style>
+ </head>
+ <body>
+	<a href="#">search</a>
+	<div></div>
+	<script>
+		var div = document.querySelector("div");
+		var a = document.querySelector("a");
+		a.onmouseover = function(){
+			div.style.display="block";
+			div.style.animation="mine 0.5s linear infinite"
+			
+		}
+		a.onmouseout = function(){
+			div.style.display="none";
+			div.style.animation=""
+		}
+	</script>
+ </body>
+</html>
