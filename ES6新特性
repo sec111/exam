@@ -1,0 +1,161 @@
+1. //箭头操作符
+	var array = [1,2,3];
+	//传统写法
+	array.forEach(function(v,i,a){
+		console.log(v);// 1 2 3 
+	})
+	//ES6
+	array.forEach(v => console.log(v));
+2. //2.1类的定义
+	class Animal{
+			//ES6中新型构造器
+		constructor(name){
+			this.name = name;
+		}
+			//实例方法
+		sayName(){
+			console.log('my name is '+this.name);
+		}
+	}
+	//2.2类的继承
+	class Programmer extends Animal
+	{
+		constructor(name){
+			//直接调用父类构造器进行初始化
+			super(name);
+		}
+		program(){
+			console.log("I'm codeing...");
+		}
+	}
+	//测试
+	var animal = new Animal('dummy');
+	wayou = new Programmer("wayou");
+	animal.sayName();
+	wayou.sayName();
+	wayou.program();
+3. /*
+	对象字面量增强，写法更加简洁与灵活
+		1.可以在对象字面量里面定义原型
+		2.定义方法不用function关键字
+		3.直接调用父类方法
+  */
+	//通过对象字面量创建对象
+	var human = {
+		breathe(){
+			console.log('breathing...');
+		}
+	};
+	var worker = {
+		__proto__:human,//设置此对象的原型为human,相当于继承human
+		company:'freelancer',
+		work(){
+			console.log('working...');
+		}
+	}
+	human.breathe();
+	worker.breathe();//调用继承来的breathe方法
+4.	 //字符串模板
+		//创建的字符串里面可以包含美元符号加花括号包裹的变量${vraible}
+		var num = Math.random();
+		console.log(`your num is ${num}`);
+5.	 //解构 //自动解析数组或对象中的值
+			//比如若一个函数要返回多个值，常规的做法是返回一个对象，将每个值做为这个对象的属性返回
+			//但在ES6中，利用解构这一特性，可以直接返回一个数组，然后数组中的值会自动被解析到对应接收该值的变量中。
+		var [x,y] = getVal();//函数返回值的解构
+			[name,,age] = ['wayou','male','secrect'];//数组解构
+				//没有别名的用空占位
+		function getVal(){
+			return [1,2];
+		}
+		console.log('x:'+x+',y:'+y);//输出x:1,y:2
+		console.log('name:'+name+',age:'+age);//输出：name:wayou age:secret
+6. 	function sayHello(name){
+			//传统的指定默认参数的方式
+			var name = name||'dude';
+			console.log('hello '+name);
+		}
+		//运用ES6的默认参数
+		function sayHello2(name='dude'){
+			consoel.log(`Hello ${name}`);
+		}
+7. 	//不定参数
+			//…x代表了所有传入add函数的参数。
+		function add(...x){
+			return x.reduce((m,n)=>m+n);
+		}
+		//传递任意个数的参数
+		console.log(add(1,2,3));//输出6
+		console.log(add(1,2,3,4,5));//输出15
+8. 	//拓展参数
+		  //它允许传递数组或者类数组直接作为函数的参数而不通过apply
+		var people = ['wayou'.'john','sherlock'];
+		function sayHello(people1,people2,people3){
+			//原本接收三个参数
+			console.log(`Hello ${people1},${people2},${people3}`);
+		}
+		sayHello(...people);//以拓展参数的形式传递
+		//替代apply
+		sayHello.apply(null,people);
+
+9.	 //let,const关键字
+		  //let定义的变量被限定在了特定范围内才能使用
+		  //const则很直观，用来定义常量，即无法被更改值的变量
+		for(let i = 0;i<2;i++){ console.log(i)} //0,1
+		console.log(i) //输出undefined,严格模式下会报错
+10. 	//for in循环用于遍历数组，类数组或对象，ES6中新引入的for of循环功能相似，
+	  var someArray = ["a","b","c"];
+		for( v of someArray){
+			console.log(v); //a,b,c
+		}  //for of 循环遍历得出值
+		for( v in someArray){
+			console.log(v); //0,1,2
+		}	//for in 循环遍历得出下标序号
+11. 
+•	iterator:它是这么一个对象，拥有一个next方法，这个方法返回一个对象{done,value}，这个对象包含两个属性，一个布尔类型的done和包含任意值的value
+•	iterable: 这是这么一个对象，拥有一个obj[@@iterator]方法，这个方法返回一个iterator
+•	generator: 它是一种特殊的iterator。反的next方法可以接收一个参数并且返回值取决与它的构造函数（generator function）。generator同时拥有一个throw方法
+•	generator 函数: 即generator的构造函数。此函数内可以使用yield关键字。在yield出现的地方可以通过generator的next或throw方法向外界传递值。generator 函数是通过function*来声明的
+•	yield 关键字：它可以暂停函数的执行，随后可以再进进入函数继续执行
+
+12. 	//proxies
+	    //proxy可以监听对象身上发生了什么事情，并在这些事情发生后执行一些相应的操作
+		//这样我们就对对象有了追踪能力，同时在绑定数据上也有好处
+
+	  //定义被监听的目标对象
+	  var engineer = { name:'Joe Sixpack',salary:50};
+	  //定义处理程序
+	  var interceptor = {
+		set:function(receiver,property,value){
+			console.log(property,'is changed to',value);
+			receiver[property] = value;
+		}
+	  };
+	  //创建代理以进行侦听
+	  engineer =new Proxy(engineer,interceptor);
+	  //做一些改动来触发代理
+	  engineer.name = "小白";
+		engineer.salary = 60;
+	   //控制台输出: salary is changed to 60
+
+	   //解释：对于处理程序，是在被侦听的对象身上发生了相应事件之后，处理程序的里面的方法就会被调用，上面例子中我们设置了Set处理函数，表明，如果我们侦听的对象的属性被更改，也就是被set，哪个处理程序就会被调用，同时通过参数能够得知哪个属性被更改，更改了什么值
+
+
+
+
+13. //promises 处理异步操作的一种模式
+     var promise = new Promise(function(resolve,reject){
+		if(/*success*/){
+			resolve("stuff worked!");
+		}
+		else{
+			reject(Error("It broke"));
+		}
+	 })
+	 //绑定处理程序
+	 promise.then(function(result){//success
+		console.log(result);
+	},function(err){//err
+		console.log(err);
+	});
+
