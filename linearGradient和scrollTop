@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #m{
+            width:100px;
+            height:100px;
+           /* background:linear-gradient(to right,yellow 0%,orange 25%,red 50%,orange 75%,yellow 100%);*/
+            /*background:linear-gradient(30deg,yellow 0%,orange 25%,red 50%,orange 75%,yellow 100%);*/
+            background: radial-gradient(circle,yellow ,orange ,red ,orange ,yellow );
+         
+            border:1px solid green;
+            position:fixed;
+            bottom:100px;
+            right:10px;
+            display:none;
+        }
+    </style>
+</head>
+<body style="height:2000px;background:#ccc;">
+    <div id="m"></div>
+    <script>
+       var m = document.getElementById("m");
+       var canMove=false;
+       var x,y;
+       m.onmousedown=function(e){
+           canMove = true;
+           x = e.offsetX;
+           y = e.offsetY;
+       }
+       window.onmousemove=function(e){
+           if(canMove){
+               var left = e.clientX - x;
+               var top = e.clientY - y;
+               m.style.left = left+"px";
+               m.style.top = top+"px";
+           }
+       }
+       m.onmouseup = function(){
+           canMove = false;
+       }
+
+       window.onscroll=function(){
+           var totop = document.documentElement.scrollTop;
+           if(totop>=500){
+               m.style.display="block";
+           }else{
+               m.style.display="none";
+           }
+       }
+    </script>
+</body>
+</html>
