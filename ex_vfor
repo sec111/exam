@@ -1,0 +1,78 @@
+<template>
+    <div class="teskist">
+            <input type="text" v-model="message" placeholder="请输入">
+               {{message}}
+
+               <div >
+                   <p>学科计分器</p>
+                 <!--  <input type="text" v-model="results[0].marks"><span>英语得分：{{results[0].marks}}</span>
+                    <input type="text" v-model="results[1].marks"><span>数学得分：{{results[1].marks}}</span>
+                     <input type="text" v-model="results[2].marks"><span>历史得分：{{results[2].marks}}</span>-->
+                     <div v-for="(item,index ) in results" >
+                        <input type="text" v-model="item.marks"> <span>{{item.name}}得分：{{item.marks}}</span><button @click="req(index)">点击</button>
+                     </div>
+                     <hr>
+                     学科总分： {{totalMarks}}
+               </div>
+    </div>
+</template>
+<script>
+
+export default {
+    name:"ex",
+   data(){
+    return {
+        message:'',
+         results:[
+                    {
+                        name:'English',
+                        marks:70
+                    },
+                    {
+                        name:'Math',
+                        marks:80
+                    },
+                    {
+                        name:'history',
+                        marks:90
+                    }
+               ]
+    }
+},
+methods:{
+    req(index){
+        alert(index);
+        this.results[index].marks="55"
+    }
+},
+computed:{
+   totalMarks:function(){
+       let total = 0;
+       let me = this
+       for(let i=0;i<me.results.length;i++){
+           total+=parseInt(me.results[i].marks)
+       }
+       return total;
+   }
+},
+watch:{
+    
+}
+    
+}
+</script>
+<style>
+ input{
+   appearance: none;
+   outline:none;
+   border:2px solid silver;
+   width:300px;
+    height:50px;
+    padding:2px;
+    font-size:38px;
+    
+ }
+ 
+</style>
+
+
